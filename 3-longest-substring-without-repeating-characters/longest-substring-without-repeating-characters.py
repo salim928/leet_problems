@@ -5,12 +5,11 @@ class Solution(object):
         :rtype: int
         """
         left = 0
-        seen = set()
+        seen = {}
         max_len = 0
-        for right in range(len(s)):
-            while s[right] in seen:
-                seen.remove(s[left])
-                left += 1
-            seen.add(s[right])
-            max_len = max(max_len, right - left + 1)
+        for right, char in enumerate(s):
+            if char in seen and seen[char] >= left:
+                left = seen[char] + 1
+            seen[char] = right
+            max_len = max(max_len, right - left +1 )
         return max_len
